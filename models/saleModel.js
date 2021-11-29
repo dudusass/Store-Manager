@@ -26,8 +26,20 @@ const getById = async (id) => {
   return sale;
 };
 
+const update = async (id, objArr) => {
+  await connection()
+    .then((db) => db.collection('sales')
+      .updateOne({ _id: ObjectId(id) }, { $set: { itensSold: objArr } }));
+
+  return {
+    _id: id,
+    itensSold: objArr,
+  };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };

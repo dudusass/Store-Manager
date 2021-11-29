@@ -42,8 +42,17 @@ const getById = async (id) => {
   return sales;
 };
 
+const update = async (id, objArr) => {
+  if (isValid(objArr)) return response(messages.CODE, messages.WRONG);
+
+  const updated = await sale.update(id, objArr);
+
+  return updated;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
