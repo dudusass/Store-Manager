@@ -51,9 +51,21 @@ const update = async (id, name, quantity) => {
   return updated;
 };
 
+const remove = async (id) => {
+  if (!ObjectId.isValid(id)) return response(messages.CODE, messages.WRONG);
+  const products = await product.getById(id);
+
+  if (!products.name) return response(messages.CODE, messages.WRONG);
+
+  await product.remove(id);
+
+  return products;
+};
+
 module.exports = {
   create,
+  update,
+  remove,
   getAll,
   getById,
-  update,
 };

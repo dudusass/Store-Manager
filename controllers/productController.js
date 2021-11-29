@@ -38,9 +38,19 @@ const update = rescue(async (req, res, next) => {
   return res.status(200).json(updated);
 });
 
+const remove = rescue(async (req, res, next) => {
+  const { id } = req.params;
+  const removed = await service.remove(id);
+
+  if (removed.code) return next(removed);
+
+  res.status(200).json(removed);
+});
+
 module.exports = {
   create,
+  update,
+  remove,
   getAll,
   getById,
-  update,
 };
