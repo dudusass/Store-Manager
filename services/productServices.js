@@ -41,8 +41,19 @@ const getById = async (id) => {
   return products;
 };
 
+const update = async (id, name, quantity) => {
+  if (name.length < 5) return response(messages.CODE, messages.NAME);
+  if (typeof quantity !== 'number') return response(messages.CODE, messages.QUANTITY);
+  if (quantity < 1) return response(messages.CODE, messages.ONE);
+
+  const updated = await product.update(id, name, quantity);
+
+  return updated;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
