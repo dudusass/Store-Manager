@@ -1,15 +1,32 @@
 const rescue = require('express-rescue');
-const Service = require('../services/saleService');
+const service = require('../services/saleService');
 
 const create = rescue(async (req, res, next) => {
   const arrSale = req.body;
-  const newSale = await Service.create(arrSale);
+  const newSale = await service.create(arrSale);
 
   if (newSale.code) return next(newSale);
 
   res.status(200).json(newSale);
 });
 
+const getAll = rescue(async (_req, res, _next) => {
+  const sales = await service.getAll();
+
+  return res.status(200).json(sales);
+});
+
+const getById = rescue(async (req, res, next) => {
+  const { id } = req.params;
+  const sales = await service.getById(id);
+
+  if (sales.code) return next(sales);
+
+  return res.status(200).json(sales);
+});
+
 module.exports = {
   create,
+  getAll,
+  getById,
 };
