@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const product = require('../models/productModel');
 
 const messages = {
@@ -6,6 +7,7 @@ const messages = {
   EXISTS: 'Product already exists',
   QUANTITY: '"quantity" must be a number',
   ONE: '"quantity" must be larger than or equal to 1',
+  WRONG: 'Wrong id format',
 };
 
 const response = (code, message) => ({
@@ -24,6 +26,23 @@ const create = async (name, quantity) => {
   return newProduct;
 };
 
+const getAll = async () => {
+  const products = await product.getAll();
+
+  return { products };
+};
+
+const getById = async (id) => {
+  if (!ObjectId.isValid(id)) return response(messages.CODE, messages.WRONG);
+  const products = await product.getById(id);
+
+  if (!products.name) return response(messages.CODE, messages.WRONG);
+
+  return products;
+};
+
 module.exports = {
   create,
+  getAll,
+  getById,
 };
