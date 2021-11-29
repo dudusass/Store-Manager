@@ -6,6 +6,7 @@ const messages = {
   WRONG: 'Wrong product ID or invalid quantity',
   NOT_FOUND: 'not_found',
   SALE_NOT_FOUND: 'Sale not found',
+  WRONG_ID: 'Wrong sale ID format',
 };
 
 const response = (code, message) => ({
@@ -50,9 +51,20 @@ const update = async (id, objArr) => {
   return updated;
 };
 
+const remove = async (id) => {
+  if (!ObjectId.isValid(id)) return response(messages.CODE, messages.WRONG_ID);
+  const sales = await sale.getById(id);
+  if (!sales) return response(messages.CODE, messages.WRONG_ID);
+
+  await sale.remove(id);
+
+  return sales;
+};
+
 module.exports = {
   create,
+  update,
   getAll,
   getById,
-  update,
+  remove,
 };
