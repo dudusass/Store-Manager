@@ -1,4 +1,4 @@
-# Store Manage
+# Store Manager
 Arquitetura e desenvolvimento de uma API de store, utilizando ```Node``` com  ```Sequelize``` e ```Express```. <br>Desenvolvimento de alguns endpoints (seguindo os princípios do REST) e aplicando a arquitetura ```MSC```, que estão conectados ao banco de dados ```MySQL```.
 
 # Habilidades 
